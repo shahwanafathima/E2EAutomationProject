@@ -200,7 +200,7 @@ public class APIUtil {
 				try {
 					if (json.get(nextKeys) instanceof JSONObject) {
 						if (exists == false) {
-							assertKeyValueFromJsonObject(json.getJSONObject(nextKeys), key);
+							retrieveKeyValueFromJsonObject(json.getJSONObject(nextKeys), key);
 						}
 					} else if (json.get(nextKeys) instanceof JSONArray) {
 						JSONArray jsonarray = json.getJSONArray(nextKeys);
@@ -208,7 +208,7 @@ public class APIUtil {
 							String jsonarrayString = jsonarray.get(i).toString();
 							JSONObject innerJSON = new JSONObject(jsonarrayString);
 							if (exists == false) {
-								assertKeyValueFromJsonObject(innerJSON, key);
+								retrieveKeyValueFromJsonObject(innerJSON, key);
 							}
 						}
 					}
@@ -218,6 +218,44 @@ public class APIUtil {
 			}
 		} else {
 			System.out.println((json.get(key)));
+		}
+	}
+
+	public static void retrieveCurrencyMatchingTags(JSONObject json, String symbol, String key, String value) {
+
+		boolean exists = json.has(key);
+		Iterator<?> keys;
+		String nextKeys;
+
+		if (!exists) {
+			keys = json.keys();
+			while (keys.hasNext()) {
+				nextKeys = (String) keys.next();
+				try {
+					if (json.get(nextKeys) instanceof JSONObject) {
+						if (exists == false) {
+							retrieveCurrencyMatchingTags(json.getJSONObject(nextKeys), symbol, key, value);
+						}
+					} else if (json.get(nextKeys) instanceof JSONArray) {
+						JSONArray jsonarray = json.getJSONArray(nextKeys);
+						for (int i = 0; i < jsonarray.length(); i++) {
+							String jsonarrayString = jsonarray.get(i).toString();
+							JSONObject innerJSON = new JSONObject(jsonarrayString);
+							if (exists == false) {
+								retrieveCurrencyMatchingTags(innerJSON, symbol, key, value);
+							}
+						}
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			}
+		} else {
+			if ((json.get(key).toString()).contains(value)) {
+				System.out.println(json.get(symbol));
+			}else {
+				System.out.println("tags not matching");
+			}
 		}
 	}
 

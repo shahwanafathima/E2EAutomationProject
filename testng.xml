@@ -6,7 +6,7 @@
 			<class name="runner.UITestRunner" />
 		</classes>
 	</test>
-	<test thread-count="5" name="API">
+	<test thread-count="5" parallel = "classes" name="API">
 		<classes>
 			<class name="runner.APITestRunner" />
 		</classes>
