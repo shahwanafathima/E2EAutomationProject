@@ -1,5 +1,5 @@
 # E2EAutomationProject
 
-Instructions to run:
-Clone the repository 
-Run tests using command "mvn test"
+Instructions to run: \n
+Clone the repository \n
+Run tests using command "mvn test" \n
